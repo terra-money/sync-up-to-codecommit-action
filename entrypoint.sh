@@ -6,8 +6,6 @@ REPO_NAME="${INPUT_REPOSITORY_NAME}"
 AWS_REGION="${INPUT_AWS_REGION}"
 CC_URL="https://git-codecommit.${AWS_REGION}.amazonaws.com/v1/repos/${REPO_NAME}"
 
-set -x
-
 # Check if the repository exists
 aws codecommit get-repository --repository-name $REPO_NAME > /dev/null 2>&1
 if [ $? -eq 0 ]; then
@@ -22,7 +20,7 @@ else
   fi
 fi
 
-set -e
+set -ex
 
 git config --global credential.'https://git-codecommit.*.amazonaws.com'.helper '!aws codecommit credential-helper $@'
 git config --global credential.UseHttpPath true
